@@ -14,7 +14,8 @@ export default function Home() {
   const add = (e) => {
     e.preventDefault();
     addtodo([text, ...todo]);
-    // setText('');
+    setText('');
+
   }
 
   return (
@@ -30,7 +31,7 @@ export default function Home() {
 
         <div className={styles.div}>
 
-          <input className={styles.input} onChange={e => setText(e.target.value)}></input>
+          <input value={text} className={styles.input} onChange={e => setText(e.target.value)}></input>
 
           <button className={styles.button} onClick={add}>Add</button>
 
