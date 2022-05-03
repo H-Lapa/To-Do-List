@@ -3,8 +3,19 @@ import styles from '../styles/Home.module.css'
 import { useState } from 'react'
 
 export default function Home() {
+
   //string variable
   const [text, setText] = useState('');
+
+  //string array
+  const [todo, addtodo] = useState([]);
+
+  //add to array function
+  const add = (e) => {
+    e.preventDefault();
+    addtodo([text, ...todo]);
+    // setText('');
+  }
 
   return (
     <div className={styles.container}>
@@ -21,13 +32,20 @@ export default function Home() {
 
           <input className={styles.input} onChange={e => setText(e.target.value)}></input>
 
-          <button className={styles.button}> Add</button>
+          <button className={styles.button} onClick={add}>Add</button>
 
         </div>
 
         <h1>{text}</h1>
+        <h1>{todo}</h1>
         
       </main>
+{/* 
+      {todo.map((item) => {
+          return (
+              <span>{item}</span>
+          )
+        })} */}
 
      
     </div>
