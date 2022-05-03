@@ -1,7 +1,11 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
+import { useState } from 'react'
 
 export default function Home() {
+  //string variable
+  const [text, setText] = useState('');
+
   return (
     <div className={styles.container}>
       <Head>
@@ -15,11 +19,13 @@ export default function Home() {
 
         <div className={styles.div}>
 
-          <input className={styles.input}></input>
+          <input className={styles.input} onChange={e => setText(e.target.value)}></input>
 
           <button className={styles.button}> Add</button>
 
         </div>
+
+        <h1>{text}</h1>
         
       </main>
 
