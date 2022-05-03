@@ -7,6 +7,12 @@
   text-align: center;
 }
 
+.flexV {
+  margin: auto;
+  text-align: center;
+  width: 300pt;
+}
+
 .input {
   width: 23%;
   padding: 10pt 20pt;
@@ -17,4 +23,9 @@
 .button {
   padding: 10pt 15pt;
   font-weight: 650;
+}
+
+.todo {
+  background-color: red;
+
 }

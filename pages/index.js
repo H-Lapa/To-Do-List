@@ -30,23 +30,25 @@ export default function Home() {
         <h1 className={styles.title}>TO-DO LIST</h1>
 
         <div className={styles.div}>
+          <form>
+            <input value={text} className={styles.input} onChange={e => setText(e.target.value)}></input>
 
-          <input value={text} className={styles.input} onChange={e => setText(e.target.value)}></input>
+            <button className={styles.button} onClick={add}>Add</button>
 
-          <button className={styles.button} onClick={add}>Add</button>
+          </form>
 
         </div>
 
-        <h1>{text}</h1>
-        <h1>{todo}</h1>
+        <div className={styles.flexV}>
+          {todo.map((item) => {
+              return (
+                  <p className={styles.todo}>{item}</p>
+              )
+            })}
+        </div>
         
       </main>
-{/* 
-      {todo.map((item) => {
-          return (
-              <span>{item}</span>
-          )
-        })} */}
+
 
      
     </div>
