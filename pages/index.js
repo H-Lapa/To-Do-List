@@ -8,14 +8,21 @@ export default function Home() {
   const [text, setText] = useState('');
 
   //string array
-  const [todo, addtodo] = useState([]);
+  const [todo, setTodo] = useState([]);
 
   //add to array function
   const add = (e) => {
     e.preventDefault();
-    addtodo([text, ...todo]);
+    setTodo([text, ...todo]);
     setText('');
 
+  }
+
+  //add to array function
+  const deletion = (e) => {
+    e.preventDefault();
+    const name = e.target.getAttribute("name");
+    setTodo(todo.filter(item => item !== name));
   }
 
   return (
@@ -42,9 +49,13 @@ export default function Home() {
         <div className={styles.flexV}>
           {todo.map((item) => {
               return (
+                <div>
                   <p className={styles.todo}>{item}</p>
+                  <button className={styles.delete} name={item} onClick={deletion}>DEL</button>
+                </div>
               )
             })}
+
         </div>
         
       </main>
