@@ -49,7 +49,7 @@ export default function Home() {
         <div className={styles.flexV}>
           {todo.map((item) => {
               return (
-                <div>
+                <div className={styles.flex}>
                   <p className={styles.todo}>{item}</p>
                   <button className={styles.delete} name={item} onClick={deletion}>DEL</button>
                 </div>
