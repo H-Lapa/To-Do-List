@@ -1,8 +1,11 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import { useState } from 'react'
+import { useState, useId} from 'react'
 
 export default function Home() {
+
+  //id variable
+  const [id, setId] = useState(0);
 
   //string variable
   const [text, setText] = useState('');
@@ -13,16 +16,17 @@ export default function Home() {
   //add to array function
   const add = (e) => {
     e.preventDefault();
-    setTodo([text, ...todo]);
+    setId(id+1);
+    const obj = {id: id, name: text};
+    setTodo([obj, ...todo]);
     setText('');
-
   }
 
   //add to array function
   const deletion = (e) => {
     e.preventDefault();
     const name = e.target.getAttribute("name");
-    setTodo(todo.filter(item => item !== name));
+    setTodo(todo.filter(item => item.id.toString() !== name));
   }
 
   return (
@@ -50,8 +54,8 @@ export default function Home() {
           {todo.map((item) => {
               return (
                 <div className={styles.flex}>
-                  <p className={styles.todo}>{item}</p>
-                  <button className={styles.delete} name={item} onClick={deletion}>DEL</button>
+                  <p className={styles.todo}>{item.name}</p>
+                  <button className={styles.delete} name={item.id} onClick={deletion}>DEL</button>
                 </div>
               )
             })}
