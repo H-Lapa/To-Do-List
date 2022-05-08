@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import { useState, useId} from 'react'
+import { useState } from 'react'
 
 export default function Home() {
 
@@ -9,6 +9,11 @@ export default function Home() {
 
   //string variable
   const [text, setText] = useState('');
+
+  //string variable - for the edit submission
+  const [editText, setEditText] = useState('');
+
+  const [todoEdit, setTodoEdit] = useState('');
 
   //string array
   const [todo, setTodo] = useState([]);
@@ -28,6 +33,17 @@ export default function Home() {
     const name = e.target.getAttribute("name");
     setTodo(todo.filter(item => item.id.toString() !== name));
   }
+
+  //edit submit function 
+  const subEdit = (id) => {
+    todo.map((item) => {
+      if (item.id == id) {
+        item.name = editText;
+      }
+    })
+    setTodoEdit(editText);
+  }
+
 
   return (
     <div className={styles.container}>
@@ -54,7 +70,17 @@ export default function Home() {
           {todo.map((item) => {
               return (
                 <div className={styles.flex}>
+                  {todoEdit ===  item.id ? 
+                  <input type="text" value={editText} className={styles.input} onChange={e => setEditText(e.target.value)}></input>
+                  : 
                   <p className={styles.todo}>{item.name}</p>
+                  }
+                
+                  {todoEdit ===  item.id ? 
+                  <button className={styles.delete} name={item.id} onClick={() => subEdit(item.id)}>Submit Edit</button>
+                  : <button className={styles.delete} name={item.id} onClick={() => setTodoEdit(item.id)}>Edit</button>
+                  }
+          
                   <button className={styles.delete} name={item.id} onClick={deletion}>DEL</button>
                 </div>
               )
