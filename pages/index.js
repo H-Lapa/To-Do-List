@@ -2,7 +2,7 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import { useState, useEffect } from 'react'
 import {db} from '../firebase'
-import { collection, onSnapshot} from "firebase/firestore";
+import { collection, onSnapshot, addDoc} from "firebase/firestore";
 
 
 export default function Home() {
@@ -22,24 +22,28 @@ export default function Home() {
   const [todo, setTodo] = useState([]);
   // console.log(todo);
 
+  function updateTodo () {
+    setTodo([]);
+    const x = collection(db, "todos");
+    onSnapshot(x, snapshot =>{
+      console.log(snapshot.docs.map(doc => doc.data().text));
+      setTodo (snapshot.docs.map((doc) => doc.data()));
+    })
+  }
 
   //runs on start up
   useEffect(() => {
-    const x = collection(db, "todos");
-    onSnapshot(x, snapshot =>{
-      console.log("hello")
-      console.log(snapshot.docs.map(doc => doc.data().text));
-      setTodo (snapshot.docs.map((doc) => doc.data()))
-    })
+    updateTodo();
   }, []);
 
   //add to array function
   const add = (e) => {
     e.preventDefault();
     setId(id+1);
-    const obj = {id: id, text: text};
-    setTodo([obj, ...todo]);
+    addDoc(collection(db,"todos"),{id: id, text: text})
+    updateTodo();
     setText('');
+    // update. function firebase
   }
 
   //add to array function
@@ -47,6 +51,7 @@ export default function Home() {
     e.preventDefault();
     const name = e.target.getAttribute("name");
     setTodo(todo.filter(item => item.id.toString() !== name));
+    //delete doc
   }
 
   //edit submit function 
@@ -57,6 +62,8 @@ export default function Home() {
       }
     })
     setTodoEdit(editText);
+
+    //updatedoc
   }
 
 
