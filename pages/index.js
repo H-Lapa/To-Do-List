@@ -2,13 +2,10 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import { useState, useEffect } from 'react'
 import {db} from '../firebase'
-import { collection, onSnapshot, addDoc} from "firebase/firestore";
+import { collection, onSnapshot, addDoc, Timestamp, ServerValue} from "firebase/firestore";
 
 
 export default function Home() {
-
-  //id variable
-  const [id, setId] = useState(0);
 
   //string variable
   const [text, setText] = useState('');
@@ -26,7 +23,7 @@ export default function Home() {
     setTodo([]);
     const x = collection(db, "todos");
     onSnapshot(x, snapshot =>{
-      console.log(snapshot.docs.map(doc => doc.data().text));
+      console.log(snapshot.docs.map(doc => doc.id));
       setTodo (snapshot.docs.map((doc) => doc.data()));
     })
   }
@@ -39,8 +36,7 @@ export default function Home() {
   //add to array function
   const add = (e) => {
     e.preventDefault();
-    setId(id+1);
-    addDoc(collection(db,"todos"),{id: id, text: text})
+    addDoc(collection(db,"todos"),{timestamp: Date.now(), text: text})
     updateTodo();
     setText('');
     // update. function firebase
@@ -50,14 +46,14 @@ export default function Home() {
   const deletion = (e) => {
     e.preventDefault();
     const name = e.target.getAttribute("name");
-    setTodo(todo.filter(item => item.id.toString() !== name));
+    setTodo(todo.filter(item => item.timestamp.toString() !== name));
     //delete doc
   }
 
   //edit submit function 
   const subEdit = (id) => {
     todo.map((item) => {
-      if (item.id == id) {
+      if (item.timestamp == id) {
         item.text = editText;
       }
     })
@@ -92,18 +88,18 @@ export default function Home() {
           {todo.map((item) => {
               return (
                 <div className={styles.flex}>
-                  {todoEdit ===  item.id ? 
+                  {todoEdit ===  item.timestamp ? 
                   <input type="text" value={editText} className={styles.input} onChange={e => setEditText(e.target.value)}></input>
                   : 
                   <p className={styles.todo}>{item.text}</p>
                   }
                 
-                  {todoEdit ===  item.id ? 
-                  <button className={styles.delete} name={item.id} onClick={() => subEdit(item.id)}>Submit Edit</button>
-                  : <button className={styles.delete} name={item.id} onClick={() => setTodoEdit(item.id)}>Edit</button>
+                  {todoEdit ===  item.timestamp ? 
+                  <button className={styles.delete} name={item.timestamp} onClick={() => subEdit(item.timestamp)}>Submit Edit</button>
+                  : <button className={styles.delete} name={item.timestamp} onClick={() => setTodoEdit(item.timestamp)}>Edit</button>
                   }
           
-                  <button className={styles.delete} name={item.id} onClick={deletion}>DEL</button>
+                  <button className={styles.delete} name={item.timestamp} onClick={deletion}>DEL</button>
                 </div>
               )
             })}
