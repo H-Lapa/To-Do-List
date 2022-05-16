@@ -1,6 +1,9 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import {db} from '../firebase'
+import { collection, onSnapshot} from "firebase/firestore";
+
 
 export default function Home() {
 
@@ -17,12 +20,24 @@ export default function Home() {
 
   //string array
   const [todo, setTodo] = useState([]);
+  // console.log(todo);
+
+
+  //runs on start up
+  useEffect(() => {
+    const x = collection(db, "todos");
+    onSnapshot(x, snapshot =>{
+      console.log("hello")
+      console.log(snapshot.docs.map(doc => doc.data().text));
+      setTodo (snapshot.docs.map((doc) => doc.data()))
+    })
+  }, []);
 
   //add to array function
   const add = (e) => {
     e.preventDefault();
     setId(id+1);
-    const obj = {id: id, name: text};
+    const obj = {id: id, text: text};
     setTodo([obj, ...todo]);
     setText('');
   }
@@ -38,7 +53,7 @@ export default function Home() {
   const subEdit = (id) => {
     todo.map((item) => {
       if (item.id == id) {
-        item.name = editText;
+        item.text = editText;
       }
     })
     setTodoEdit(editText);
@@ -73,7 +88,7 @@ export default function Home() {
                   {todoEdit ===  item.id ? 
                   <input type="text" value={editText} className={styles.input} onChange={e => setEditText(e.target.value)}></input>
                   : 
-                  <p className={styles.todo}>{item.name}</p>
+                  <p className={styles.todo}>{item.text}</p>
                   }
                 
                   {todoEdit ===  item.id ? 
@@ -89,32 +104,6 @@ export default function Home() {
         </div>
         
       </main>
-
-      <script type="module">
-      // Import the functions you need from the SDKs you need
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-app.js";
-      import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-analytics.js";
-      // TODO: Add SDKs for Firebase products that you want to use
-      // https://firebase.google.com/docs/web/setup#available-libraries
-
-      // Your web app's Firebase configuration
-      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-      const firebaseConfig = {
-        apiKey: "AIzaSyBM7i4uyhaH8Pb7bxQD3EIQ7DddcRz34sM",
-        authDomain: "todoapp-b9a56.firebaseapp.com",
-        projectId: "todoapp-b9a56",
-        storageBucket: "todoapp-b9a56.appspot.com",
-        messagingSenderId: "734592971207",
-        appId: "1:734592971207:web:d5419a2f981a4e14c269e2",
-        measurementId: "G-1Z4ES19CSK"
-      };
-
-      // Initialize Firebase
-      const app = initializeApp(firebaseConfig);
-      const analytics = getAnalytics(app);
-      </script> 
-
-
      
     </div>
   )
