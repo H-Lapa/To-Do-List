@@ -55,7 +55,10 @@ export default function Home() {
 
   //edit submit function 
   const subEdit = (id) => {
-
+    const userDoc = doc(db,"todos",id);
+    const newFields = {text: editText};
+    updateDoc(userDoc,newFields);
+    setTodoEdit(editText);
     
 
     //updatedoc
