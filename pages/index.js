@@ -2,7 +2,7 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import { useState, useEffect } from 'react'
 import {db} from '../firebase'
-import { collection, onSnapshot, addDoc, Timestamp, ServerValue} from "firebase/firestore";
+import { collection, onSnapshot, addDoc, doc, deleteDoc, query, where, getDocs, querySnapshot, updateDoc} from "firebase/firestore";
 
 
 export default function Home() {
@@ -23,8 +23,9 @@ export default function Home() {
     setTodo([]);
     const x = collection(db, "todos");
     onSnapshot(x, snapshot =>{
-      console.log(snapshot.docs.map(doc => doc.id));
-      setTodo (snapshot.docs.map((doc) => doc.data()));
+      // console.log(snapshot.docs.map(doc => doc.id));
+      setTodo(snapshot.docs.map((doc) => ({...doc.data(),id:doc.id})))
+      // setTodo (snapshot.docs.map((doc) => doc.data()));
     })
   }
 
@@ -43,21 +44,19 @@ export default function Home() {
   }
 
   //add to array function
-  const deletion = (e) => {
-    e.preventDefault();
-    const name = e.target.getAttribute("name");
-    setTodo(todo.filter(item => item.timestamp.toString() !== name));
+  function deletion (id) {
+    // e.preventDefault();
     //delete doc
+    const userDoc = doc(db, "todos", id);
+    deleteDoc(userDoc);
+    updateTodo();
+
   }
 
   //edit submit function 
   const subEdit = (id) => {
-    todo.map((item) => {
-      if (item.timestamp == id) {
-        item.text = editText;
-      }
-    })
-    setTodoEdit(editText);
+
+    
 
     //updatedoc
   }
@@ -95,11 +94,11 @@ export default function Home() {
                   }
                 
                   {todoEdit ===  item.timestamp ? 
-                  <button className={styles.delete} name={item.timestamp} onClick={() => subEdit(item.timestamp)}>Submit Edit</button>
+                  <button className={styles.delete} name={item.timestamp} onClick={() => subEdit(item.id)}>Submit Edit</button>
                   : <button className={styles.delete} name={item.timestamp} onClick={() => setTodoEdit(item.timestamp)}>Edit</button>
                   }
           
-                  <button className={styles.delete} name={item.timestamp} onClick={deletion}>DEL</button>
+                  <button className={styles.delete} name={item.timestamp} onClick={() => deletion(item.id)}>DEL</button>
                 </div>
               )
             })}
