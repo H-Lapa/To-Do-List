@@ -59,9 +59,7 @@ export default function Home() {
     const newFields = {text: editText};
     updateDoc(userDoc,newFields);
     setTodoEdit(editText);
-    
-
-    //updatedoc
+    setEditText('');
   }
 
 
