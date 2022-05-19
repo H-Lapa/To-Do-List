@@ -81,7 +81,7 @@ export default function Home() {
             <TextField id="outlined-basic" label="Todo" variant="outlined" className={styles.inputUi} value={text} onChange={e => setText(e.target.value)} />
 
             {/* <button className={styles.button} onClick={add}>Add</button> */}
-            <Button variant="contained" size="large" onClick={add} className={styles.buttonUi} >Add</Button>
+            <Button type="submit" variant="contained" size="large" onClick={add} className={styles.buttonUi} >Add</Button>
 
           </form>
 
