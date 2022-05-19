@@ -104,7 +104,10 @@ export default function Home() {
                   : <button className={styles.delete} name={item.timestamp} onClick={() => setTodoEdit(item.timestamp)}><EditIcon/></button>
                   }
           
-                  <button className={styles.delete} name={item.timestamp} onClick={() => deletion(item.id)}><DeleteIcon/></button>
+                  {/* <button className={styles.delete} name={item.timestamp} onClick={() => deletion(item.id)}><DeleteIcon/></button> */}
+
+                  <Button name={item.timestamp} onClick={() => deletion(item.id)} className={styles.delete} variant="contained" color="error" ><DeleteIcon/></Button>
+                  
                 
              
                   
