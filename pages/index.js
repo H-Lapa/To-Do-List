@@ -2,7 +2,8 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import { useState, useEffect } from 'react'
 import {db} from '../firebase'
-import { collection, onSnapshot, addDoc, doc, deleteDoc, query, where, getDocs, querySnapshot, updateDoc} from "firebase/firestore";
+import { collection, onSnapshot, addDoc, doc, deleteDoc, updateDoc} from "firebase/firestore";
+import { Button } from '@mui/material';
 
 
 export default function Home() {
