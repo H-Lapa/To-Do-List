@@ -18,9 +18,18 @@
   box-sizing: border-box;
 }
 
+.inputUi {
+  margin: 10pt;
+  width: 20vw;
+}
+
 .button {
   padding: 10pt 15pt;
   font-weight: 650;
+}
+
+.buttonUi {
+  margin-top: 14pt;
 }
 
 .todo {

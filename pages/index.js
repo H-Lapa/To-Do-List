@@ -3,7 +3,7 @@ import styles from '../styles/Home.module.css'
 import { useState, useEffect } from 'react'
 import {db} from '../firebase'
 import { collection, onSnapshot, addDoc, doc, deleteDoc, updateDoc} from "firebase/firestore";
-import { Button } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 
 
 export default function Home() {
@@ -77,9 +77,11 @@ export default function Home() {
 
         <div className={styles.div}>
           <form>
-            <input value={text} className={styles.input} onChange={e => setText(e.target.value)}></input>
+            {/* <input value={text} className={styles.input} onChange={e => setText(e.target.value)}></input> */}
+            <TextField id="outlined-basic" label="Todo" variant="outlined" className={styles.inputUi} value={text} onChange={e => setText(e.target.value)} />
 
-            <button className={styles.button} onClick={add}>Add</button>
+            {/* <button className={styles.button} onClick={add}>Add</button> */}
+            <Button variant="contained" size="large" onClick={add} className={styles.buttonUi} >Add</Button>
 
           </form>
 
