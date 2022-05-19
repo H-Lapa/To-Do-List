@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react'
 import {db} from '../firebase'
 import { collection, onSnapshot, addDoc, doc, deleteDoc, updateDoc} from "firebase/firestore";
 import { Button, TextField } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 
 export default function Home() {
@@ -99,10 +101,15 @@ export default function Home() {
                 
                   {todoEdit ===  item.timestamp ? 
                   <button className={styles.delete} name={item.timestamp} onClick={() => subEdit(item.id)}>Submit Edit</button>
-                  : <button className={styles.delete} name={item.timestamp} onClick={() => setTodoEdit(item.timestamp)}>Edit</button>
+                  : <button className={styles.delete} name={item.timestamp} onClick={() => setTodoEdit(item.timestamp)}><EditIcon/></button>
                   }
           
-                  <button className={styles.delete} name={item.timestamp} onClick={() => deletion(item.id)}>DEL</button>
+                  <button className={styles.delete} name={item.timestamp} onClick={() => deletion(item.id)}><DeleteIcon/></button>
+                
+             
+                  
+
+                  
                 </div>
               )
             })}
