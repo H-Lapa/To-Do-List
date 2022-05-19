@@ -3,7 +3,7 @@ import styles from '../styles/Home.module.css'
 import { useState, useEffect } from 'react'
 import {db} from '../firebase'
 import { collection, onSnapshot, addDoc, doc, deleteDoc, updateDoc} from "firebase/firestore";
-import { Button, TextField } from '@mui/material';
+import { Button, Card, TextField } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
@@ -92,6 +92,7 @@ export default function Home() {
         <div className={styles.flexV}>
           {todo.map((item) => {
               return (
+                <Card className={styles.card} variant="outlined">
                 <div className={styles.flex}>
                   {todoEdit ===  item.timestamp ? 
                   <input type="text" value={editText} className={styles.input} onChange={e => setEditText(e.target.value)}></input>
@@ -101,7 +102,7 @@ export default function Home() {
                 
                   {todoEdit ===  item.timestamp ? 
                   <button className={styles.delete} name={item.timestamp} onClick={() => subEdit(item.id)}>Submit Edit</button>
-                  : <button className={styles.delete} name={item.timestamp} onClick={() => setTodoEdit(item.timestamp)}><EditIcon/></button>
+                  : <Button variant="contained" color="warning" className={styles.delete} name={item.timestamp} onClick={() => setTodoEdit(item.timestamp)}><EditIcon/></Button>
                   }
           
                   {/* <button className={styles.delete} name={item.timestamp} onClick={() => deletion(item.id)}><DeleteIcon/></button> */}
@@ -114,6 +115,7 @@ export default function Home() {
 
                   
                 </div>
+                </Card>
               )
             })}
 
