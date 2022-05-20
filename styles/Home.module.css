@@ -34,12 +34,12 @@
 
 .todo {
   text-align: center;
-  width: 23.5%;
+  width: 50%;
 
 }
 
 .delete {
-  margin: 10pt 25pt;
+  margin: 10pt 10pt;
   color: black;
 }
 
